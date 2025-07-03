@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitBuddy - Your Smart Fitness Companion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: url('https://images.pexels.com/photos/1552106/pexels-photo-1552106.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: -1;
+    }
+    h1 {
+      margin-top: 30px;
+      font-size: 2.5rem;
+      color: #00ffd5;
+      text-align: center;
+    }
+    form {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 15px;
+      margin-top: 30px;
+      width: 90%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      box-shadow: 0 0 20px rgba(0,255,255,0.3);
+    }
+    input, button {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 1rem;
+    }
+    input:focus {
+      outline: 2px solid #00ffd5;
+    }
+    button {
+      background-color: #00ffd5;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #00bfa5;
+    }
+    #result {
+      margin-top: 30px;
+      text-align: center;
+      max-width: 600px;
+    }
+    #result img {
+      margin-top: 20px;
+      width: 80%;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,255,255,0.5);
+    }
+    #result iframe {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 560px;
+      height: 315px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,255,255,0.5);
+    }
+  </style>
+</head>
+<body>
+  <h1>FitBuddy - Personalized Fitness & Diet</h1>
+  <form id="bmiForm">
+    <input type="number" id="height" placeholder="Enter your height in cm" required />
+    <input type="number" id="weight" placeholder="Enter your weight in kg" required />
+    <button type="submit">Get My Plan</button>
+  </form>
+  <div id="result"></div>
+
+  <script>
+    document.getElementById("bmiForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const h = parseFloat(document.getElementById("height").value) / 100;
+      const w = parseFloat(document.getElementById("weight").value);
+      const bmi = (w / (h * h)).toFixed(2);
+
+      let category = "";
+      let message = "";
+      let img = "";
+      let video = "";
+
+      if (bmi < 18.5) {
+        category = "Underweight";
+        message = "Focus on calorie surplus, strength training, and muscle gain.";
+        img = "https://images.pexels.com/photos/841130/pexels-photo-841130.jpeg";
+        video = "https://www.youtube.com/embed/vc1E5CfRfos";
+      } else if (bmi < 25) {
+        category = "Normal";
+        message = "Maintain a balanced diet and regular exercise routine.";
+        img = "https://images.pexels.com/photos/414029/pexels-photo-414029.jpeg";
+        video = "https://www.youtube.com/embed/X3q5e1pV4pc";
+      } else if (bmi < 30) {
+        category = "Overweight";
+        message = "Engage in cardio, HIIT workouts, and reduce sugar intake.";
+        img = "https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg";
+        video = "https://www.youtube.com/embed/ml6cT4AZdqI";
+      } else {
+        category = "Obese";
+        message = "Start with light walking, consult a trainer, and eat clean.";
+        img = "https://images.pexels.com/photos/1103829/pexels-photo-1103829.jpeg";
+        video = "https://www.youtube.com/embed/O5YW0bVhQb8";
+      }
+
+      document.getElementById("result").innerHTML = `
+        <h2>Your BMI: ${bmi} (${category})</h2>
+        <p>${message}</p>
+        <img src="${img}" alt="fitness image">
+        <iframe src="${video}" title="Workout Video" frameborder="0" allowfullscreen></iframe>
+      `;
+    });
+  </script>
+</body>
+</html>
